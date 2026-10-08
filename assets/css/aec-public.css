@@ -1,0 +1,682 @@
+/*
+ * Energy Bill Comparison - front end.
+ *
+ * Scoped under .aec-app so a theme's own rules are not disturbed, and every
+ * element selector is prefixed so a theme's bare `input`/`p` rules do not
+ * capture these controls unexpectedly.
+ */
+
+.aec-app {
+	--aec-accent: #0b6b53;
+	--aec-ink: #15201d;
+	--aec-muted: #5c6b66;
+	--aec-line: #d9e2de;
+	--aec-surface: #ffffff;
+	--aec-surface-2: #f5f8f6;
+	--aec-warn: #8a5a00;
+	--aec-warn-bg: #fff6e0;
+	--aec-bad: #9b2226;
+	--aec-bad-bg: #fdeceb;
+	--aec-good: #0b6b53;
+	--aec-radius: 10px;
+
+	box-sizing: border-box;
+	max-width: 880px;
+	margin: 0 auto;
+	color: var(--aec-ink);
+	font-size: 16px;
+	line-height: 1.55;
+}
+
+.aec-app *,
+.aec-app *::before,
+.aec-app *::after {
+	box-sizing: inherit;
+}
+
+/* --- Step indicator ----------------------------------------------------- */
+
+.aec-steps {
+	display: flex;
+	gap: 8px;
+	list-style: none;
+	margin: 0 0 24px;
+	padding: 0;
+	counter-reset: none;
+}
+
+.aec-step {
+	flex: 1 1 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 10px 12px;
+	border-radius: var(--aec-radius);
+	background: var(--aec-surface-2);
+	color: var(--aec-muted);
+	font-size: 0.875rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+}
+
+.aec-step > span {
+	display: grid;
+	place-items: center;
+	width: 22px;
+	height: 22px;
+	flex: 0 0 22px;
+	border-radius: 50%;
+	background: #fff;
+	border: 1px solid var(--aec-line);
+	font-size: 0.75rem;
+	line-height: 1;
+}
+
+.aec-step.is-current {
+	background: color-mix(in srgb, var(--aec-accent) 12%, white);
+	color: var(--aec-accent);
+}
+
+.aec-step.is-current > span {
+	background: var(--aec-accent);
+	border-color: var(--aec-accent);
+	color: #fff;
+}
+
+.aec-step.is-done {
+	color: var(--aec-accent);
+}
+
+/* --- Panels ------------------------------------------------------------- */
+
+.aec-panel {
+	margin: 0 0 20px;
+	padding: 28px;
+	background: var(--aec-surface);
+	border: 1px solid var(--aec-line);
+	border-radius: 14px;
+}
+
+.aec-panel__title {
+	margin: 0 0 8px;
+	font-size: 1.4rem;
+	line-height: 1.25;
+}
+
+.aec-lede {
+	margin: 0 0 20px;
+	color: var(--aec-muted);
+}
+
+.aec-hint {
+	margin: -6px 0 14px;
+	color: var(--aec-muted);
+	font-size: 0.875rem;
+}
+
+/* --- Alerts and notices ------------------------------------------------- */
+
+.aec-alert,
+.aec-notice {
+	margin: 0 0 18px;
+	padding: 12px 14px;
+	border-radius: var(--aec-radius);
+	border-left: 3px solid var(--aec-accent);
+	background: var(--aec-surface-2);
+	font-size: 0.925rem;
+}
+
+.aec-alert {
+	border-left-color: var(--aec-bad);
+	background: var(--aec-bad-bg);
+	color: var(--aec-bad);
+}
+
+.aec-notice--warn {
+	border-left-color: var(--aec-warn);
+	background: var(--aec-warn-bg);
+	color: var(--aec-warn);
+}
+
+.aec-notice ul,
+.aec-alert ul {
+	margin: 6px 0 0;
+	padding-left: 18px;
+}
+
+/* --- Upload ------------------------------------------------------------- */
+
+.aec-drop {
+	position: relative;
+	margin: 0 0 16px;
+	border: 2px dashed var(--aec-line);
+	border-radius: 14px;
+	background: var(--aec-surface-2);
+	transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.aec-drop.is-over {
+	border-color: var(--aec-accent);
+	background: color-mix(in srgb, var(--aec-accent) 6%, white);
+}
+
+.aec-drop__input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.aec-drop__label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 36px 20px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.aec-drop__input:focus-visible + .aec-drop__label {
+	outline: 2px solid var(--aec-accent);
+	outline-offset: 3px;
+	border-radius: 12px;
+}
+
+.aec-drop__icon {
+	width: 32px;
+	height: 32px;
+	color: var(--aec-accent);
+}
+
+.aec-drop__primary {
+	font-weight: 650;
+	font-size: 1.0625rem;
+}
+
+.aec-drop__secondary {
+	color: var(--aec-muted);
+	font-size: 0.875rem;
+}
+
+.aec-drop__chosen {
+	margin: 0;
+	padding: 0 20px 20px;
+	text-align: center;
+	font-size: 0.9rem;
+	color: var(--aec-accent);
+	font-weight: 600;
+	word-break: break-all;
+}
+
+.aec-privacy {
+	margin: 0 0 20px;
+	color: var(--aec-muted);
+	font-size: 0.8125rem;
+}
+
+/* --- Progress ----------------------------------------------------------- */
+
+.aec-progress {
+	margin: 18px 0 0;
+}
+
+.aec-progress__bar {
+	height: 6px;
+	border-radius: 999px;
+	background: var(--aec-surface-2);
+	overflow: hidden;
+}
+
+.aec-progress__bar > span {
+	display: block;
+	height: 100%;
+	width: 35%;
+	border-radius: 999px;
+	background: var(--aec-accent);
+	animation: aec-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes aec-slide {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(330%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.aec-progress__bar > span {
+		animation: none;
+		width: 100%;
+		opacity: 0.6;
+	}
+}
+
+.aec-progress__text {
+	margin: 10px 0 0;
+	color: var(--aec-muted);
+	font-size: 0.9rem;
+}
+
+/* --- Forms -------------------------------------------------------------- */
+
+.aec-fieldset {
+	margin: 0 0 22px;
+	padding: 18px;
+	border: 1px solid var(--aec-line);
+	border-radius: var(--aec-radius);
+}
+
+.aec-fieldset > legend {
+	padding: 0 8px;
+	font-weight: 650;
+	font-size: 0.9375rem;
+}
+
+.aec-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+	gap: 14px;
+}
+
+.aec-field {
+	margin: 0;
+}
+
+.aec-field > label {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--aec-muted);
+	text-transform: none;
+}
+
+.aec-app input[type="text"],
+.aec-app input[type="email"],
+.aec-app input[type="tel"],
+.aec-app input[type="number"],
+.aec-app select,
+.aec-app textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 9px 11px;
+	border: 1px solid var(--aec-line);
+	border-radius: 8px;
+	background: #fff;
+	color: var(--aec-ink);
+	font: inherit;
+	font-size: 0.9375rem;
+	line-height: 1.4;
+}
+
+.aec-app input:focus,
+.aec-app select:focus,
+.aec-app textarea:focus {
+	outline: 2px solid var(--aec-accent);
+	outline-offset: 1px;
+	border-color: var(--aec-accent);
+}
+
+/* A field the extractor was unsure about. */
+.aec-field.is-check > label::after {
+	content: attr(data-check-label);
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	background: var(--aec-warn-bg);
+	color: var(--aec-warn);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	vertical-align: 1px;
+}
+
+.aec-field.is-check input,
+.aec-field.is-check select {
+	border-color: var(--aec-warn);
+	background: #fffdf7;
+}
+
+.aec-field--check > label {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	font-size: 0.9rem;
+	font-weight: 400;
+	color: var(--aec-ink);
+	text-transform: none;
+}
+
+.aec-field--check input {
+	margin-top: 4px;
+	flex: 0 0 auto;
+}
+
+.aec-req {
+	color: var(--aec-bad);
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.aec-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin-top: 8px;
+}
+
+.aec-app .aec-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 11px 20px;
+	border: 1px solid transparent;
+	border-radius: 999px;
+	font: inherit;
+	font-size: 0.9375rem;
+	font-weight: 650;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	transition: filter 0.15s ease, background 0.15s ease;
+}
+
+.aec-app .aec-btn--primary {
+	background: var(--aec-accent);
+	color: #fff;
+}
+
+.aec-app .aec-btn--primary:hover:not(:disabled) {
+	filter: brightness(1.08);
+}
+
+.aec-app .aec-btn--ghost {
+	background: transparent;
+	border-color: var(--aec-line);
+	color: var(--aec-muted);
+}
+
+.aec-app .aec-btn--ghost:hover {
+	border-color: var(--aec-accent);
+	color: var(--aec-accent);
+}
+
+.aec-app .aec-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.aec-app .aec-btn:focus-visible {
+	outline: 2px solid var(--aec-accent);
+	outline-offset: 2px;
+}
+
+/* --- Results ------------------------------------------------------------ */
+
+.aec-summary {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 12px;
+	margin: 0 0 20px;
+}
+
+.aec-stat {
+	padding: 14px 16px;
+	border: 1px solid var(--aec-line);
+	border-radius: var(--aec-radius);
+	background: var(--aec-surface-2);
+}
+
+.aec-stat__label {
+	display: block;
+	color: var(--aec-muted);
+	font-size: 0.75rem;
+	font-weight: 650;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.aec-stat__value {
+	display: block;
+	margin-top: 4px;
+	font-size: 1.375rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.aec-results {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-bottom: 22px;
+}
+
+.aec-card {
+	position: relative;
+	padding: 18px;
+	border: 1px solid var(--aec-line);
+	border-radius: 12px;
+	background: var(--aec-surface);
+}
+
+.aec-card.is-best {
+	border-color: var(--aec-accent);
+	box-shadow: 0 0 0 1px var(--aec-accent) inset;
+}
+
+.aec-card__ribbon {
+	position: absolute;
+	top: -10px;
+	left: 18px;
+	padding: 2px 10px;
+	border-radius: 999px;
+	background: var(--aec-accent);
+	color: #fff;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.aec-card__head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.aec-card__id {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	min-width: 0;
+}
+
+.aec-card__logo {
+	width: 48px;
+	height: 48px;
+	flex: 0 0 48px;
+	object-fit: contain;
+	border-radius: 8px;
+	background: var(--aec-surface-2);
+}
+
+.aec-card__retailer {
+	margin: 0;
+	font-size: 0.8125rem;
+	font-weight: 650;
+	color: var(--aec-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.aec-card__plan {
+	margin: 2px 0 0;
+	font-size: 1.0625rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.aec-card__price {
+	text-align: right;
+	flex: 0 0 auto;
+}
+
+.aec-card__cost {
+	display: block;
+	font-size: 1.5rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+}
+
+.aec-card__per {
+	display: block;
+	color: var(--aec-muted);
+	font-size: 0.75rem;
+}
+
+.aec-card__saving {
+	display: inline-block;
+	margin-top: 6px;
+	padding: 2px 9px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--aec-good) 12%, white);
+	color: var(--aec-good);
+	font-size: 0.8125rem;
+	font-weight: 700;
+}
+
+.aec-card__saving.is-negative {
+	background: var(--aec-bad-bg);
+	color: var(--aec-bad);
+}
+
+.aec-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 14px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.aec-tag {
+	padding: 2px 9px;
+	border: 1px solid var(--aec-line);
+	border-radius: 999px;
+	font-size: 0.75rem;
+	color: var(--aec-muted);
+}
+
+.aec-tag--estimate {
+	border-color: var(--aec-warn);
+	background: var(--aec-warn-bg);
+	color: var(--aec-warn);
+	font-weight: 650;
+}
+
+.aec-card__notes {
+	margin: 12px 0 0;
+	color: var(--aec-muted);
+	font-size: 0.875rem;
+}
+
+.aec-card__flags {
+	margin: 10px 0 0;
+	padding-left: 18px;
+	color: var(--aec-warn);
+	font-size: 0.8125rem;
+}
+
+.aec-card__foot {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin-top: 16px;
+}
+
+.aec-details {
+	margin-top: 14px;
+	border-top: 1px solid var(--aec-line);
+	padding-top: 12px;
+}
+
+.aec-details > summary {
+	cursor: pointer;
+	color: var(--aec-accent);
+	font-size: 0.875rem;
+	font-weight: 650;
+}
+
+.aec-breakdown {
+	width: 100%;
+	margin: 12px 0 0;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+}
+
+.aec-breakdown th,
+.aec-breakdown td {
+	padding: 6px 8px;
+	border-bottom: 1px solid var(--aec-line);
+	text-align: left;
+	vertical-align: top;
+}
+
+.aec-breakdown td:last-child,
+.aec-breakdown th:last-child {
+	text-align: right;
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+}
+
+.aec-breakdown__detail {
+	display: block;
+	color: var(--aec-muted);
+	font-size: 0.8125rem;
+}
+
+.aec-disclaimer {
+	margin: 18px 0 0;
+	color: var(--aec-muted);
+	font-size: 0.8125rem;
+}
+
+.aec-panel--done {
+	border-color: var(--aec-accent);
+	background: color-mix(in srgb, var(--aec-accent) 5%, white);
+}
+
+@media (max-width: 560px) {
+	.aec-panel {
+		padding: 20px 16px;
+	}
+
+	.aec-steps {
+		gap: 4px;
+	}
+
+	.aec-step {
+		flex-direction: column;
+		gap: 4px;
+		padding: 8px 4px;
+		font-size: 0.75rem;
+		text-align: center;
+	}
+
+	.aec-card__head {
+		flex-direction: column;
+	}
+
+	.aec-card__price {
+		text-align: left;
+	}
+}

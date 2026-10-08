@@ -1,0 +1,263 @@
+/* Energy Bill Comparison - admin screens. */
+
+.aec-wrap .aec-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 12px;
+	margin: 20px 0 24px;
+}
+
+.aec-card-stat {
+	padding: 14px 16px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.aec-card-stat__label {
+	display: block;
+	color: #646970;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.aec-card-stat__value {
+	display: block;
+	margin-top: 4px;
+	font-size: 26px;
+	font-weight: 600;
+	line-height: 1.1;
+}
+
+.aec-card-stat__value small {
+	display: block;
+	margin-top: 2px;
+	color: #d63638;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.aec-wrap .aec-columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+	gap: 28px;
+	align-items: start;
+}
+
+.aec-wrap .aec-col > h2:first-child {
+	margin-top: 0;
+}
+
+.aec-checklist {
+	margin: 0 0 24px;
+	padding: 0;
+	list-style: none;
+}
+
+.aec-checklist li {
+	position: relative;
+	margin: 0 0 10px;
+	padding: 10px 12px 10px 36px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.aec-checklist li::before {
+	position: absolute;
+	left: 12px;
+	top: 10px;
+	font-size: 15px;
+	line-height: 1.4;
+}
+
+.aec-checklist li.is-done::before {
+	content: "\2713";
+	color: #008a20;
+	font-weight: 700;
+}
+
+.aec-checklist li.is-todo::before {
+	content: "\2022";
+	color: #dba617;
+	font-size: 22px;
+	line-height: 1;
+}
+
+.aec-checklist strong {
+	display: block;
+}
+
+.aec-checklist span {
+	display: block;
+	color: #646970;
+	font-size: 12px;
+}
+
+.aec-checklist a {
+	display: inline-block;
+	margin-top: 4px;
+	font-size: 12px;
+}
+
+.aec-code {
+	display: inline-block;
+	padding: 6px 10px;
+	background: #f0f0f1;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.aec-pill {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 999px;
+	background: #f0f0f1;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.aec-pill--good {
+	background: #edfaef;
+	color: #007017;
+}
+
+.aec-pill--warn {
+	background: #fcf3e3;
+	color: #8a5a00;
+}
+
+.aec-pill--bad {
+	background: #fcf0f1;
+	color: #b32d2e;
+}
+
+.aec-warn-text {
+	color: #8a5a00;
+}
+
+.aec-wrap .aec-filters,
+.aec-wrap .aec-search {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin: 12px 0;
+}
+
+.aec-wrap .aec-filters .button {
+	margin: 0;
+}
+
+.aec-inline-form {
+	display: inline-block;
+	margin: 0;
+}
+
+.aec-row-actions {
+	white-space: nowrap;
+}
+
+.aec-row-actions .button,
+.aec-row-actions .aec-inline-form {
+	margin-right: 3px;
+}
+
+.aec-sub {
+	color: #646970;
+	font-size: 12px;
+}
+
+.aec-truncate {
+	display: block;
+	max-width: 320px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.aec-logo-thumb {
+	max-width: 28px;
+	max-height: 28px;
+	margin-left: 6px;
+	vertical-align: middle;
+}
+
+.aec-logo-preview {
+	max-width: 120px;
+	max-height: 60px;
+	padding: 6px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+/* Rate repeater */
+
+.aec-wrap .aec-rates {
+	max-width: 900px;
+	margin-bottom: 10px;
+}
+
+.aec-wrap .aec-rates th,
+.aec-wrap .aec-rates td {
+	padding: 8px;
+	vertical-align: middle;
+}
+
+.aec-wrap .aec-rates input[type="number"] {
+	width: 110px;
+}
+
+.aec-wrap .aec-rates select {
+	max-width: 220px;
+}
+
+.aec-rates-help {
+	max-width: 900px;
+}
+
+.aec-rates-empty td {
+	color: #646970;
+}
+
+.aec-env th {
+	width: 180px;
+	text-align: left;
+}
+
+.aec-raw {
+	max-height: 420px;
+	margin-top: 8px;
+	padding: 12px;
+	overflow: auto;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-size: 12px;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.aec-skipped {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.aec-skipped li {
+	margin-bottom: 6px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.aec-skipped span {
+	display: block;
+	color: #646970;
+	font-size: 12px;
+}
